@@ -268,50 +268,53 @@ export default Profile;
 //             const res = response.data;
 //             setData(res);
 
-//             const temp = [
-//                 {
-//                     name: 'Steps',
-//                     value: parseInt(res.steps["activities-steps"]?.[0]?.value || 0),
-//                     unit: 'steps',
-//                     goal: 10000,
-//                     goalUnit: 'steps',
-//                 },
-//                 {
-//                     name: 'Calories Burned',
-//                     value: parseInt(res.calories.caloriesOut || 0),
-//                     unit: 'kcal',
-//                     goal: 2500,
-//                     goalUnit: 'kcal',
-//                 },
-//                 {
-//                     name: 'Distance Walked',
-//                     value: parseFloat(res.calories?.distances?.find(d => d.activity === "total")?.distance || 0),
-//                     unit: 'km',
-//                     goal: 8,
-//                     goalUnit: 'km',
-//                 },
-//                 {
-//                     name: 'Running',
-//                     value: parseFloat(res.calories?.distances?.find(d => d.activity === "veryActive")?.distance || 0),
-//                     unit: 'km',
-//                     goal: 5,
-//                     goalUnit: 'km',
-//                 },
-//                 {
-//                     name: 'Cycling',
-//                     value: parseFloat(res.calories?.distances?.find(d => d.activity === "moderatelyActive")?.distance || 0),
-//                     unit: 'km',
-//                     goal: 10,
-//                     goalUnit: 'km',
-//                 },
-//                 {
-//                     name: 'Weight',
-//                     value: parseFloat(res.profile.user.weight || 0),
-//                     unit: 'kg',
-//                     goal: 70,
-//                     goalUnit: 'kg',
-//                 },
-//             ];
+//             const goals = res.groupInfo?.goals || {};
+
+// const temp = [
+//     {
+//         name: 'Steps',
+//         value: parseInt(res.steps["activities-steps"]?.[0]?.value || 0),
+//         unit: 'steps',
+//         goal: parseInt(goals.steps) || 10000,
+//         goalUnit: 'steps',
+//     },
+//     {
+//         name: 'Calories Burned',
+//         value: parseInt(res.calories.caloriesOut || 0),
+//         unit: 'kcal',
+//         goal: parseInt(goals.calories) || 2500,
+//         goalUnit: 'kcal',
+//     },
+//     {
+//         name: 'Distance Walked',
+//         value: parseFloat(res.calories?.distances?.find(d => d.activity === "total")?.distance || 0),
+//         unit: 'km',
+//         goal: parseFloat(goals.distanceWalked) || 8,
+//         goalUnit: 'km',
+//     },
+//     {
+//         name: 'Running',
+//         value: parseFloat(res.calories?.distances?.find(d => d.activity === "veryActive")?.distance || 0),
+//         unit: 'km',
+//         goal: parseFloat(goals.running) || 5,
+//         goalUnit: 'km',
+//     },
+//     {
+//         name: 'Cycling',
+//         value: parseFloat(res.calories?.distances?.find(d => d.activity === "moderatelyActive")?.distance || 0),
+//         unit: 'km',
+//         goal: parseFloat(goals.cycling) || 10,
+//         goalUnit: 'km',
+//     },
+//     {
+//         name: 'Weight',
+//         value: parseFloat(res.profile.user.weight || 0),
+//         unit: 'kg',
+//         goal: parseFloat(goals.weight) || 70,
+//         goalUnit: 'kg',
+//     },
+// ];
+
 //             setMetrics(temp);
 //         })
 //         .catch(error => console.error("Error fetching profile:", error));
