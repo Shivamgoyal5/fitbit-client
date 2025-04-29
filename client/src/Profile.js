@@ -56,7 +56,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import CircularProgress from '@mui/joy/CircularProgress';
 import { AiOutlineEye } from 'react-icons/ai';
-import './HomeBanner1.css';
+import './profile.css';
 
 function Profile() {
     const [data, setData] = useState(null);
