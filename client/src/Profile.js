@@ -44,7 +44,8 @@ function Profile() {
                 <h2>Challenge Today:</h2>
 <ul>
   {data.groupInfo.challenge?.steps?.map((step, i) => (
-    <li key={i}>{step}</li>
+      <h2>Steps:
+    <li key={i}>{step}</li></h2>
   ))}
 </ul>
 <p>Calories Burned: {data.groupInfo.challenge?.caloriesBurned}</p>
@@ -58,6 +59,7 @@ function Profile() {
 <p>Water Intake: {data.groupInfo.tips?.waterIntake} L</p>
 <p>Calorie Intake: {data.groupInfo.tips?.calorieIntake}</p>
 <p>Sleep Hours: {data.groupInfo.tips?.sleepHours}</p>
+ <p>Sleep Hours: {data.groupInfo.tips?.foodRecommendation}</p>
 
                 </div>
             ) : (
