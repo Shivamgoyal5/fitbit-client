@@ -422,6 +422,15 @@ import './profile.css';
 function Profile() {
     const [data, setData] = useState(null);
     const [metrics, setMetrics] = useState([]);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         const token = localStorage.getItem("access_token");
@@ -436,13 +445,10 @@ function Profile() {
             setData(res);
             const goals = res.groupInfo?.challenge || {};
             const temp = [
-              // data.groupInfo.challenge?.caloriesBurned
-                // { name: 'Steps', value: parseInt(res.steps["activities-steps"]?.[0]?.value || 0), unit: 'steps', goal: parseInt(goals.steps) || 10000, goalUnit: 'steps' },
                 { name: 'Calories Burned', value: parseInt(res.calories.caloriesOut || 0), unit: 'kcal', goal: parseInt(goals.caloriesBurned) || 2500, goalUnit: 'kcal' },
                 { name: 'Running', value: parseFloat(res.calories?.distances?.find(d => d.activity === "veryActive")?.distance || 0), unit: 'km', goal: parseFloat(goals.caloriesRunning) || 5, goalUnit: 'km' },
                 { name: 'Cycling', value: parseFloat(res.calories?.distances?.find(d => d.activity === "moderatelyActive")?.distance || 0), unit: 'km', goal: parseFloat(goals.caloriesCycling) || 10, goalUnit: 'km' },                
             ];
-
             setMetrics(temp);
         })
         .catch(error => console.error("Error fetching profile:", error));
@@ -458,9 +464,9 @@ function Profile() {
 
     return (
         <div className="main-layout">
-            <div className="sidebar">Leaderboard</div>
+            {!isMobile && <div className="sidebar">Leaderboard</div>}
 
-            <div className="topbar">
+            <div className={`topbar ${isMobile ? 'mobile' : ''}`}>
                 <div className="app-name">MyFitnessApp</div>
                 <div className="nav-links">
                     <button onClick={() => window.location.href = "/about"}>About</button>
@@ -471,25 +477,36 @@ function Profile() {
                 </div>
             </div>
 
-            <div className="right-box">
-                <h4>User Info</h4>
-                {data && data.profile && data.profile.user ? (
-                    <ul>
-                        <li><strong>Name:</strong> {data.profile.user.fullName}</li>
-                        <li><strong>Age:</strong> {data.profile.user.age || "N/A"}</li>
-                        <li><strong>Height:</strong> {data.profile.user.height} cm</li>
-                        <li><strong>Weight:</strong> {data.profile.user.weight} kg</li>
-                        <li><strong>Gender:</strong> {data.profile.user.gender}</li>
-                    </ul>
-                ) : (
-                    <p>Loading user info...</p>
-                )}
-            </div>
+            {!isMobile && (
+                <div className="right-box">
+                    <h4>User Info</h4>
+                    {data && data.profile && data.profile.user ? (
+                        <ul>
+                            <li><strong>Name:</strong> {data.profile.user.fullName}</li>
+                            <li><strong>Age:</strong> {data.profile.user.age || "N/A"}</li>
+                            <li><strong>Height:</strong> {data.profile.user.height} cm</li>
+                            <li><strong>Weight:</strong> {data.profile.user.weight} kg</li>
+                            <li><strong>Gender:</strong> {data.profile.user.gender}</li>
+                        </ul>
+                    ) : (
+                        <p>Loading user info...</p>
+                    )}
+                </div>
+            )}
 
-            <div className="content">
+            <div className={`content ${isMobile ? 'mobile' : ''}`}>
                 {data ? (
                     <>
-                        <h2>Welcome, {data.profile.user.fullName}</h2>
+                        <div className="header-section">
+                            <h2>Welcome, {data.profile.user.fullName}</h2>
+                            {isMobile && (
+                                <div className="mobile-user-info">
+                                    <p><strong>Age:</strong> {data.profile.user.age || "N/A"} | <strong>Gender:</strong> {data.profile.user.gender}</p>
+                                    <p><strong>Height:</strong> {data.profile.user.height} cm | <strong>Weight:</strong> {data.profile.user.weight} kg</p>
+                                </div>
+                            )}
+                        </div>
+                        
                         <div className="meters">
                             {metrics.map((item, index) => (
                                 <div className="card" key={index}>
@@ -522,21 +539,27 @@ function Profile() {
                         </div>
 
                         <div className="tips-container">
-                            {[
-                                { name: "Water Intake", tip: `You should drink at least ${data.groupInfo.tips?.waterIntake || 2.5} L of water.` },
-                                { name: "Calorie Intake", tip: `Try to burn at least ${data.groupInfo.tips?.calorieIntake || 500} kcal through exercise.` },
-                                { name: "Food", tip: `${data.groupInfo.tips?.foodRecommendation || "Maintain a balanced diet rich in proteins and fibers."}` },
-                                { name: "Sleep", tip: `Aim to sleep ${data.groupInfo.tips?.sleepHours || 7} hours for proper recovery.` },
-                            ].map((item, idx) => (
-                                <div className="tip-card" key={idx}>
-                                    <h3>{item.name}</h3>
-                                    <p>{item.tip}</p>
-                                </div>
-                            ))}
+                            <h3 className="tips-title">Health Tips</h3>
+                            <div className="tips-grid">
+                                {[
+                                    { name: "Water Intake", tip: `You should drink at least ${data.groupInfo.tips?.waterIntake || 2.5} L of water.` },
+                                    { name: "Calorie Intake", tip: `Try to burn at least ${data.groupInfo.tips?.calorieIntake || 500} kcal through exercise.` },
+                                    { name: "Food", tip: `${data.groupInfo.tips?.foodRecommendation || "Maintain a balanced diet rich in proteins and fibers."}` },
+                                    { name: "Sleep", tip: `Aim to sleep ${data.groupInfo.tips?.sleepHours || 7} hours for proper recovery.` },
+                                ].map((item, idx) => (
+                                    <div className="tip-card" key={idx}>
+                                        <h4>{item.name}</h4>
+                                        <p>{item.tip}</p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </>
                 ) : (
-                    <p>Loading...</p>
+                    <div className="loading-container">
+                        <CircularProgress size="lg" />
+                        <p>Loading your fitness data...</p>
+                    </div>
                 )}
             </div>
         </div>
