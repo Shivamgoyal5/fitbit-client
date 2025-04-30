@@ -434,7 +434,7 @@ function Profile() {
         .then(response => {
             const res = response.data;
             setData(res);
-            const goals = res.groupInfo.challenge? || {};
+            const goals = res.groupInfo?.challenge || {};
             const temp = [
               // data.groupInfo.challenge?.caloriesBurned
                 // { name: 'Steps', value: parseInt(res.steps["activities-steps"]?.[0]?.value || 0), unit: 'steps', goal: parseInt(goals.steps) || 10000, goalUnit: 'steps' },
