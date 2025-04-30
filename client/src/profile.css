@@ -367,3 +367,33 @@ body {
         font-size: 1.5rem;
     }
 }
+
+
+
+.leaderboard-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.leaderboard-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.leaderboard-rank {
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.leaderboard-name {
+    flex: 1;
+}
+
+.leaderboard-points {
+    color: #666;
+}
+
