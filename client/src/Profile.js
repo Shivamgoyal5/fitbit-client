@@ -438,7 +438,7 @@ export default Profile;
 //             const temp = [
 //               // data.groupInfo.challenge?.caloriesBurned
 //                 { name: 'Steps', value: parseInt(res.steps["activities-steps"]?.[0]?.value || 0), unit: 'steps', goal: parseInt(goals.steps) || 10000, goalUnit: 'steps' },
-//                 { name: 'Calories Burned', value: parseInt(res.calories.caloriesOut || 0), unit: 'kcal', goal: parseInt(goals.caloriesBurned) || 2500, goalUnit: 'kcal' },
+//                 { name: 'Calories Burned', value: parseInt(res.calories.caloriesOut || 0), unit: 'kcal', goal: parseInt(data.groupInfo.challenge?.caloriesBurned) || 2500, goalUnit: 'kcal' },
 //                 { name: 'Running', value: parseFloat(res.calories?.distances?.find(d => d.activity === "veryActive")?.distance || 0), unit: 'km', goal: parseFloat(goals.Calories) || 5, goalUnit: 'km' },
 //                 { name: 'Cycling', value: parseFloat(res.calories?.distances?.find(d => d.activity === "moderatelyActive")?.distance || 0), unit: 'km', goal: parseFloat(goals.cycling) || 10, goalUnit: 'km' },                
 //             ];
