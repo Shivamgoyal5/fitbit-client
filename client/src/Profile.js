@@ -42,12 +42,7 @@ function Profile() {
                     } km</h2>
 
                 <h2>Challenge Today:</h2>
-<ul>
-  {data.groupInfo.challenge?.steps?.map((step, i) => (
-      <h2>Steps:
-    <li key={i}>{step}</li></h2>
-  ))}
-</ul>
+<p>Steps: {data.groupInfo.challenge?.steps}</p>
 <p>Calories Burned: {data.groupInfo.challenge?.caloriesBurned}</p>
 <p>Calories Running: {data.groupInfo.challenge?.caloriesRunning}</p>
 <p>Calories Cycling: {data.groupInfo.challenge?.caloriesCycling}</p>
