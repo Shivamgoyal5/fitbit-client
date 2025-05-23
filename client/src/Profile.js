@@ -56,6 +56,27 @@ function Profile() {
 <p>Sleep Hours: {data.groupInfo.tips?.sleepHours}</p>
  <p>Sleep Hours: {data.groupInfo.tips?.foodRecommendation}</p>
 
+<h2>Group Leaderboard:</h2>
+<table style={{ margin: "0 auto", borderCollapse: "collapse" }}>
+    <thead>
+        <tr>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Rank</th>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Name</th>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Points</th>
+        </tr>
+    </thead>
+    <tbody>
+        {data.leaderboard.map((user, index) => (
+            <tr key={user.name}>
+                <td style={{ border: "1px solid #ddd", padding: "8px" }}>{index + 1}</td>
+                <td style={{ border: "1px solid #ddd", padding: "8px" }}>{user.name}</td>
+                <td style={{ border: "1px solid #ddd", padding: "8px" }}>{user.point}</td>
+            </tr>
+        ))}
+    </tbody>
+</table>
+
+
                 </div>
             ) : (
                 <p>Loading...</p>
