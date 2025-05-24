@@ -36,16 +36,16 @@ function Login() {
   };
 
   return (
-    <div
-      className="min-h-screen relative overflow-hidden flex items-center justify-center p-6"
-      style={{
-        backgroundImage:
-          "linear-gradient(to bottom right, rgba(79, 70, 229, 0.8), rgba(219, 39, 119, 0.8)), url('/back.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
+   <div
+  className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden"
+  style={{
+    backgroundImage:
+      "linear-gradient(to bottom right, rgba(79, 70, 229, 0.8), rgba(219, 39, 119, 0.8)), url('/back.png')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+  }}
+>
       {/* Decorative Gradient Circles */}
       <div className="absolute top-10 left-10 w-72 h-72 bg-purple-400 opacity-30 rounded-full blur-3xl animate-pulse z-0"></div>
       <div className="absolute bottom-10 right-10 w-72 h-72 bg-pink-400 opacity-30 rounded-full blur-3xl animate-pulse z-0"></div>
