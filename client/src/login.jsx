@@ -21,6 +21,7 @@
 
 // export default Login;
 import React from "react";
+import { FaHeartbeat } from "react-icons/fa";
 
 const CLIENT_ID = "23QCJS";
 const REDIRECT_URI = "https://fitbit-app-frontend.vercel.app/callback";
@@ -35,13 +36,25 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-500 to-pink-500 flex items-center justify-center p-6">
-      <div className="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-md text-center transform transition-transform duration-300 hover:scale-105">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Connect with Fitbit</h1>
-        <p className="text-gray-600 mb-8">Access your health and activity data by connecting your Fitbit account.</p>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-700 via-purple-600 to-pink-500 relative overflow-hidden flex items-center justify-center p-6">
+      {/* Decorative Gradient Circles */}
+      <div className="absolute top-10 left-10 w-72 h-72 bg-purple-400 opacity-30 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-10 right-10 w-72 h-72 bg-pink-400 opacity-30 rounded-full blur-3xl animate-pulse"></div>
+
+      {/* Main Card */}
+      <div className="bg-white/80 backdrop-blur-md p-10 rounded-3xl shadow-2xl w-full max-w-md text-center transform transition-transform duration-300 hover:scale-105 border border-white/30">
+        <div className="flex justify-center mb-6 text-pink-500">
+          <FaHeartbeat className="text-5xl animate-bounce" />
+        </div>
+        <h1 className="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">
+          Connect with Fitbit
+        </h1>
+        <p className="text-gray-700 text-sm mb-8 leading-relaxed">
+          Sync your health and wellness data with our app. Monitor your heart rate, sleep, activity, and more in one place.
+        </p>
         <button
           onClick={handleLogin}
-          className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-200 ease-in-out hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-pink-300"
+          className="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-pink-300"
         >
           Connect to Fitbit
         </button>
