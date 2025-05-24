@@ -36,22 +36,22 @@ function Login() {
   };
 
   return (
-   <div
-  className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden"
-  style={{
-    backgroundImage:
-      "linear-gradient(to bottom right, rgba(79, 70, 229, 0.8), rgba(219, 39, 119, 0.8)), url('/back.png')",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-  }}
->
-      {/* Decorative Gradient Circles */}
+    <div
+      className="min-h-screen flex items-center justify-center relative overflow-hidden"
+      style={{
+        backgroundImage:
+          "linear-gradient(to bottom right, rgba(79,70,229,0.8), rgba(219,39,119,0.8)), url('/7197cf9d-c68f-4b8e-bdfb-45b2a2678eff.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {/* Decorative Blurred Circles */}
       <div className="absolute top-10 left-10 w-72 h-72 bg-purple-400 opacity-30 rounded-full blur-3xl animate-pulse z-0"></div>
       <div className="absolute bottom-10 right-10 w-72 h-72 bg-pink-400 opacity-30 rounded-full blur-3xl animate-pulse z-0"></div>
 
       {/* Main Card */}
-      <div className="bg-white/80 backdrop-blur-md p-10 rounded-3xl shadow-2xl w-full max-w-md text-center transform transition-transform duration-300 hover:scale-105 border border-white/30 z-10">
+      <div className="bg-white/80 backdrop-blur-md p-10 rounded-3xl shadow-2xl w-full max-w-md text-center z-10">
         <div className="flex justify-center mb-6 text-pink-500">
           <FaHeartbeat className="text-5xl animate-bounce" />
         </div>
