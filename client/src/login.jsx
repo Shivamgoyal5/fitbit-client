@@ -40,7 +40,7 @@ function Login() {
       className="min-h-screen flex items-center justify-center relative overflow-hidden"
       style={{
         backgroundImage:
-          "linear-gradient(to bottom right, rgba(79,70,229,0.8), rgba(219,39,119,0.8)), url('/7197cf9d-c68f-4b8e-bdfb-45b2a2678eff.png')",
+          "linear-gradient(to bottom right, rgba(79,70,229,0.8), rgba(219,39,119,0.8)), url('/back.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
