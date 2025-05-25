@@ -11,7 +11,7 @@ html, body {
   min-height: 100vh;
   background: 
     linear-gradient(rgba(0, 180, 216, 0.7), rgba(0, 119, 182, 0.7)),
-    url('/background.jpg') no-repeat center center fixed;
+    url('/back.png') no-repeat center center fixed;
   background-size: cover;
   display: flex;
   align-items: center;
