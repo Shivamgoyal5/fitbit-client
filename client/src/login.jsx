@@ -90,7 +90,7 @@ function Login() {
   };
 
   return (
-    <div className="login-background light-gradient">
+    <div className="login-background sunset-orange">
       <div className="login-container">
         <div className="login-card">
           <div className="heart-icon">
