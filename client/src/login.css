@@ -6,18 +6,25 @@ html, body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Background container */
-.login-container {
+/* Full-page background with image from public folder */
+.login-background {
   min-height: 100vh;
+  background: 
+    linear-gradient(rgba(0, 180, 216, 0.7), rgba(0, 119, 182, 0.7)),
+    url('/background.jpg') no-repeat center center fixed;
+  background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
-  background-size: cover;
-  background-position: center;
+}
+
+/* Container for the card */
+.login-container {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
 }
 
 /* Card styles */
@@ -32,7 +39,7 @@ html, body {
   text-align: center;
 }
 
-/* Icon styles */
+/* Rest of your existing styles... */
 .heart-icon {
   display: flex;
   justify-content: center;
@@ -40,7 +47,6 @@ html, body {
   color: #00b4d8;
 }
 
-/* Text styles */
 .login-title {
   font-size: 1.875rem;
   font-weight: 700;
@@ -54,7 +60,6 @@ html, body {
   line-height: 1.625;
 }
 
-/* Button styles */
 .login-button {
   background-color: #0077b6;
   color: white;
@@ -78,7 +83,6 @@ html, body {
   ring-color: rgba(0, 180, 216, 0.3);
 }
 
-/* Footer styles */
 .login-footer {
   margin-top: 1.5rem;
   font-size: 0.75rem;
