@@ -154,6 +154,7 @@ function Profile() {
                                 <div className="card-header-box">
                                     <span className="card-header-box-name">Calories</span>
                                     <span className="card-header-box-value">{data.calories.caloriesOut || "N/A"} kcal</span>
+    
                                 </div>
                             </div>
                         </div>
@@ -211,6 +212,8 @@ function Profile() {
                         </div>
                     </div>
 
+
+
                     <div className="tips-container">
                         <h3 className="tips-title">Health Tips</h3>
                         <div className="tips-grid">
@@ -240,18 +243,20 @@ function Profile() {
                         </div>
                     </div>
 
-                    <div className="tips-container">
-                        <h3 className="tips-title">Group Leaderboard</h3>
-                        <ul className="leaderboard-list">
-                            {data.leaderboard.map((user, index) => (
-                                <li key={user.name} className="leaderboard-item">
-                                    <span className="leaderboard-rank">{index + 1}</span>
-                                    <span className="leaderboard-name">{user.name}</span>
-                                    <span className="leaderboard-points">{user.point}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+
+
+                    // <div className="tips-container">
+                    //     <h3 className="tips-title">Group Leaderboard</h3>
+                    //     <ul className="leaderboard-list">
+                    //         {data.leaderboard.map((user, index) => (
+                    //             <li key={user.name} className="leaderboard-item">
+                    //                 <span className="leaderboard-rank">{index + 1}</span>
+                    //                 <span className="leaderboard-name">{user.name}</span>
+                    //                 <span className="leaderboard-points">{user.point}</span>
+                    //             </li>
+                    //         ))}
+                    //     </ul>
+                    // </div>
                 </div>
             ) : (
                 <div className="loading-container">
