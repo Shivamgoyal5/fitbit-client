@@ -47,6 +47,11 @@ html, body {
   padding: 1rem;
 }
 
+.sunset-orange {
+  background: #ff6b6b;
+}
+
+
 .login-container {
   width: 100%;
   max-width: 1200px;
