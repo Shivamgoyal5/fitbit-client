@@ -271,6 +271,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import './profile.css';
 
 function Profile() {
     const [data, setData] = useState(null);
