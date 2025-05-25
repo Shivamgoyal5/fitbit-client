@@ -269,6 +269,167 @@
 
 // export default Profile;
 
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
+// import './profile.css';
+
+// function Profile() {
+//     const [data, setData] = useState(null);
+
+//     useEffect(() => {
+//         const token = localStorage.getItem("access_token");
+//         if (!token) return console.error("Access token not found in localStorage");
+
+//         axios.get("https://fitbit-app-backend.vercel.app/profile", {
+//             headers: {
+//                 Authorization: `Bearer ${token}`
+//             },
+//             withCredentials: true
+//         })
+//         .then(response => setData(response.data))
+//         .catch(error => console.error("Error fetching profile:", error));
+//     }, []);
+
+//     return (
+//         <div className="content">
+//             <div className="header-section">
+//                 <h2>Fitbit Profile</h2>
+//             </div>
+            
+//             {data ? (
+//                 <div>
+//                     <div className="meters">
+//                         <div className="card">
+//                             <div className="card-header">
+//                                 <div className="card-header-box">
+//                                     <span className="card-header-box-name">Name</span>
+//                                     <span className="card-header-box-value">{data.profile.user.fullName}</span>
+//                                 </div>
+//                                 <div className="card-header-box">
+//                                     <span className="card-header-box-name">Age</span>
+//                                     <span className="card-header-box-value">{data.profile.user.age}</span>
+//                                 </div>
+//                             </div>
+//                             <div className="card-header">
+//                                 <div className="card-header-box">
+//                                     <span className="card-header-box-name">Height</span>
+//                                     <span className="card-header-box-value">{data.profile.user.height} cm</span>
+//                                 </div>
+//                                 <div className="card-header-box">
+//                                     <span className="card-header-box-name">Weight</span>
+//                                     <span className="card-header-box-value">{data.profile.user.weight} kg</span>
+//                                 </div>
+//                             </div>
+//                         </div>
+
+//                         <div className="card">
+//                             <div className="card-header">
+//                                 <div className="card-header-box">
+//                                     <span className="card-header-box-name">Steps</span>
+//                                     <span className="card-header-box-value">{data.steps["activities-steps"]?.[0]?.value || "N/A"}</span>
+//                                 </div>
+//                             </div>
+//                             <div className="card-header">
+//                                 <div className="card-header-box">
+//                                     <span className="card-header-box-name">Calories</span>
+//                                     <span className="card-header-box-value">{data.calories.caloriesOut || "N/A"} kcal</span>
+//                                 </div>
+//                             </div>
+//                         </div>
+
+//                         <div className="card">
+//                             <div className="card-header">
+//                                 <div className="card-header-box">
+//                                     <span className="card-header-box-name">Distance</span>
+//                                     <span className="card-header-box-value">
+//                                         {data.calories?.distances?.find(d => d.activity === "total")?.distance ?? "N/A"} km
+//                                     </span>
+//                                 </div>
+//                             </div>
+//                             <div className="card-header">
+//                                 <div className="card-header-box">
+//                                     <span className="card-header-box-name">Running</span>
+//                                     <span className="card-header-box-value">
+//                                         {data.calories?.distances?.find(d => d.activity === "veryActive")?.distance ?? "N/A"} km
+//                                     </span>
+//                                 </div>
+//                             </div>
+//                         </div>
+
+//                         <div className="card">
+//                             <div className="card-header">
+//                                 <div className="card-header-box">
+//                                     <span className="card-header-box-name">Cycling</span>
+//                                     <span className="card-header-box-value">
+//                                         {data.calories?.distances?.find(d => d.activity === "moderatelyActive")?.distance ?? "N/A"} km
+//                                     </span>
+//                                 </div>
+//                             </div>
+//                         </div>
+//                     </div>
+
+//                     <div className="tips-container">
+//                         <h3 className="tips-title">Today's Challenge</h3>
+//                         <div className="tips-grid">
+//                             <div className="tip-card">
+//                                 <h4>Steps Goal</h4>
+//                                 <p>{data.groupInfo.challenge?.steps || "N/A"}</p>
+//                             </div>
+//                             <div className="tip-card">
+//                                 <h4>Calories Burned</h4>
+//                                 <p>{data.groupInfo.challenge?.caloriesBurned || "N/A"}</p>
+//                             </div>
+//                             <div className="tip-card">
+//                                 <h4>Running Goal</h4>
+//                                 <p>{data.groupInfo.challenge?.caloriesRunning || "N/A"}</p>
+//                             </div>
+//                             <div className="tip-card">
+//                                 <h4>Cycling Goal</h4>
+//                                 <p>{data.groupInfo.challenge?.caloriesCycling || "N/A"}</p>
+//                             </div>
+//                         </div>
+//                     </div>
+
+//                     <div className="tips-container">
+//                         <h3 className="tips-title">Health Tips</h3>
+//                         <div className="tips-grid">
+//                             <div className="tip-card">
+//                                 <h4>Water Intake</h4>
+//                                 <p>{data.groupInfo.tips?.waterIntake || "N/A"} L</p>
+//                             </div>
+//                             <div className="tip-card">
+//                                 <h4>Calorie Intake</h4>
+//                                 <p>{data.groupInfo.tips?.calorieIntake || "N/A"}</p>
+//                             </div>
+//                             <div className="tip-card">
+//                                 <h4>Sleep Hours</h4>
+//                                 <p>{data.groupInfo.tips?.sleepHours || "N/A"}</p>
+//                             </div>
+//                             <div className="tip-card">
+//                                 <h4>Food Recommendation</h4>
+//                                 <p>{data.groupInfo.tips?.foodRecommendation || "N/A"}</p>
+//                             </div>
+//                         </div>
+//                     </div>
+
+//                     <div className="tips-container">
+//                         <h3 className="tips-title">Motivational Quote</h3>
+//                         <div className="tip-card">
+//                             <p>{data.groupInfo.quote || "No quote available"}</p>
+//                         </div>
+//                     </div>
+//                 </div>
+//             ) : (
+//                 <div className="loading-container">
+//                     <p>Loading profile data...</p>
+//                 </div>
+//             )}
+//         </div>
+//     );
+// }
+
+// export default Profile;
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import './profile.css';
@@ -298,6 +459,7 @@ function Profile() {
             
             {data ? (
                 <div>
+                    {/* User Metrics */}
                     <div className="meters">
                         <div className="card">
                             <div className="card-header">
@@ -368,6 +530,7 @@ function Profile() {
                         </div>
                     </div>
 
+                    {/* Challenge Info */}
                     <div className="tips-container">
                         <h3 className="tips-title">Today's Challenge</h3>
                         <div className="tips-grid">
@@ -390,6 +553,21 @@ function Profile() {
                         </div>
                     </div>
 
+                    {/* Leaderboard Section */}
+                    <div className="tips-container">
+                        <h3 className="tips-title">Leaderboard</h3>
+                        <ul className="leaderboard-list">
+                            {data.groupInfo.leaderboard?.map((user, index) => (
+                                <li key={user.userId || index} className="leaderboard-item">
+                                    <span className="leaderboard-rank">#{index + 1}</span>
+                                    <span className="leaderboard-name">{user.name}</span>
+                                    <span className="leaderboard-points">{user.points} pts</span>
+                                </li>
+                            )) || <li>No leaderboard data</li>}
+                        </ul>
+                    </div>
+
+                    {/* Health Tips */}
                     <div className="tips-container">
                         <h3 className="tips-title">Health Tips</h3>
                         <div className="tips-grid">
@@ -412,6 +590,7 @@ function Profile() {
                         </div>
                     </div>
 
+                    {/* Motivational Quote */}
                     <div className="tips-container">
                         <h3 className="tips-title">Motivational Quote</h3>
                         <div className="tip-card">
@@ -429,6 +608,7 @@ function Profile() {
 }
 
 export default Profile;
+
 
 
 
