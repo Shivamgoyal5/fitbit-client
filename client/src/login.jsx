@@ -75,6 +75,7 @@
 // export default Login;
 import React from "react";
 import { FaHeartbeat } from "react-icons/fa";
+import "./Login.css"; // Import the CSS file
 
 const CLIENT_ID = "23QCJS";
 const REDIRECT_URI = "https://fitbit-app-frontend.vercel.app/callback";
@@ -89,39 +90,31 @@ function Login() {
   };
 
   return (
-    <div
-      className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden"
-      style={{
-        background: "linear-gradient(135deg, #00b4d8 0%, #0077b6 100%)",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
-      }}
-    >
+    <div className="login-container">
       {/* Main Card */}
-      <div className="bg-white bg-opacity-90 backdrop-blur-sm p-8 rounded-xl shadow-lg w-full max-w-md text-center z-10">
-        <div className="flex justify-center mb-6 text-[#00b4d8]">
+      <div className="login-card">
+        <div className="heart-icon">
           <FaHeartbeat className="text-5xl" />
         </div>
         
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
+        <h1 className="login-title">
           Connect with Fitbit
         </h1>
         
-        <p className="text-gray-600 mb-8 leading-relaxed">
+        <p className="login-description">
           Sync your health and wellness data with our app. Monitor your heart rate, sleep, activity, and more in one place.
         </p>
         
         <button
           onClick={handleLogin}
-          className="bg-[#0077b6] hover:bg-[#023e8a] text-white px-8 py-3 rounded-full font-medium shadow-md transition-all duration-300 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+          className="login-button"
         >
           Connect to Fitbit
         </button>
         
-        <div className="mt-6 text-xs text-gray-500">
+        <div className="login-footer">
           <p>RFC Fatouma</p>
-          <p className="mt-2">{new Date().toLocaleTimeString()} {new Date().toLocaleDateString()}</p>
+          <p>{new Date().toLocaleTimeString()} {new Date().toLocaleDateString()}</p>
         </div>
       </div>
     </div>
