@@ -113,7 +113,7 @@ function Login() {
           </button>
           
           <div className="login-footer">
-            <p>RFC Fatouma</p>
+            <p>Hello!</p>
             <p>{new Date().toLocaleTimeString()} {new Date().toLocaleDateString()}</p>
           </div>
         </div>
