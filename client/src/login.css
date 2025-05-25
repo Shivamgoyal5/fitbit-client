@@ -1,1 +1,27 @@
+/* Reset default margins/padding and ensure full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 
+/* Full-page background styles */
+.background-container {
+  height: 100vh; /* Full viewport height */
+  width: 100vw;  /* Full viewport width */
+  
+  /* Background image properties */
+  background-image: url('your-image.jpg'); /* Replace with your image path */
+  background-size: cover;       /* Cover entire container */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* No tiling */
+  background-attachment: fixed; /* Optional: Fixed on scroll */
+
+  /* Optional: Add overlay or text styling */
+  color: white; /* Example: White text for dark backgrounds */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
