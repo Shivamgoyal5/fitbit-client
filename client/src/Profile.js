@@ -432,182 +432,201 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import CircularProgress from '@mui/joy/CircularProgress';
+import { AiOutlineEye } from 'react-icons/ai';
 import './profile.css';
 
 function Profile() {
     const [data, setData] = useState(null);
+    const [metrics, setMetrics] = useState([]);
+    const [leaderboard, setLeaderboard] = useState([]);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         const token = localStorage.getItem("access_token");
         if (!token) return console.error("Access token not found in localStorage");
 
         axios.get("https://fitbit-app-backend.vercel.app/profile", {
-            headers: {
-                Authorization: `Bearer ${token}`
-            },
+            headers: { Authorization: `Bearer ${token}` },
             withCredentials: true
         })
-        .then(response => setData(response.data))
+        .then(response => {
+            const res = response.data;
+            setData(res);
+            setLeaderboard(res.leaderboard || []);
+
+            const goals = res.groupInfo?.challenge || {};
+
+            const running = parseFloat(res.activities?.veryActive || 0);
+            const cycling = parseFloat(res.activities?.moderatelyActive || 0);
+
+            const temp = [
+                {
+                    name: 'Calories Burned',
+                    value: parseInt(res.calories?.caloriesOut || 0),
+                    unit: 'kcal',
+                    goal: parseInt(goals.caloriesBurned) || 2500,
+                    goalUnit: 'kcal'
+                },
+                {
+                    name: 'Running',
+                    value: running,
+                    unit: 'km',
+                    goal: parseFloat(goals.caloriesRunning) || 5,
+                    goalUnit: 'km'
+                },
+                {
+                    name: 'Cycling',
+                    value: cycling,
+                    unit: 'km',
+                    goal: parseFloat(goals.caloriesCycling) || 10,
+                    goalUnit: 'km'
+                }
+            ];
+            setMetrics(temp);
+        })
         .catch(error => console.error("Error fetching profile:", error));
     }, []);
 
+    function simplifyFraction(numerator, denominator) {
+        function gcd(a, b) {
+            return b === 0 ? a : gcd(b, a % b);
+        }
+        const commonDivisor = gcd(numerator, denominator);
+        return [Math.round(numerator / commonDivisor), Math.round(denominator / commonDivisor)];
+    }
+
     return (
-        <div className="content">
-            <div className="header-section">
-                <h2>Fitbit Profile</h2>
-            </div>
-            
-            {data ? (
-                <div>
-                    {/* User Metrics */}
-                    <div className="meters">
-                        <div className="card">
-                            <div className="card-header">
-                                <div className="card-header-box">
-                                    <span className="card-header-box-name">Name</span>
-                                    <span className="card-header-box-value">{data.profile.user.fullName}</span>
-                                </div>
-                                <div className="card-header-box">
-                                    <span className="card-header-box-name">Age</span>
-                                    <span className="card-header-box-value">{data.profile.user.age}</span>
-                                </div>
-                            </div>
-                            <div className="card-header">
-                                <div className="card-header-box">
-                                    <span className="card-header-box-name">Height</span>
-                                    <span className="card-header-box-value">{data.profile.user.height} cm</span>
-                                </div>
-                                <div className="card-header-box">
-                                    <span className="card-header-box-name">Weight</span>
-                                    <span className="card-header-box-value">{data.profile.user.weight} kg</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="card">
-                            <div className="card-header">
-                                <div className="card-header-box">
-                                    <span className="card-header-box-name">Steps</span>
-                                    <span className="card-header-box-value">{data.steps["activities-steps"]?.[0]?.value || "N/A"}</span>
-                                </div>
-                            </div>
-                            <div className="card-header">
-                                <div className="card-header-box">
-                                    <span className="card-header-box-name">Calories</span>
-                                    <span className="card-header-box-value">{data.calories.caloriesOut || "N/A"} kcal</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="card">
-                            <div className="card-header">
-                                <div className="card-header-box">
-                                    <span className="card-header-box-name">Distance</span>
-                                    <span className="card-header-box-value">
-                                        {data.calories?.distances?.find(d => d.activity === "total")?.distance ?? "N/A"} km
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="card-header">
-                                <div className="card-header-box">
-                                    <span className="card-header-box-name">Running</span>
-                                    <span className="card-header-box-value">
-                                        {data.calories?.distances?.find(d => d.activity === "veryActive")?.distance ?? "N/A"} km
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="card">
-                            <div className="card-header">
-                                <div className="card-header-box">
-                                    <span className="card-header-box-name">Cycling</span>
-                                    <span className="card-header-box-value">
-                                        {data.calories?.distances?.find(d => d.activity === "moderatelyActive")?.distance ?? "N/A"} km
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Challenge Info */}
-                    <div className="tips-container">
-                        <h3 className="tips-title">Today's Challenge</h3>
-                        <div className="tips-grid">
-                            <div className="tip-card">
-                                <h4>Steps Goal</h4>
-                                <p>{data.groupInfo.challenge?.steps || "N/A"}</p>
-                            </div>
-                            <div className="tip-card">
-                                <h4>Calories Burned</h4>
-                                <p>{data.groupInfo.challenge?.caloriesBurned || "N/A"}</p>
-                            </div>
-                            <div className="tip-card">
-                                <h4>Running Goal</h4>
-                                <p>{data.groupInfo.challenge?.caloriesRunning || "N/A"}</p>
-                            </div>
-                            <div className="tip-card">
-                                <h4>Cycling Goal</h4>
-                                <p>{data.groupInfo.challenge?.caloriesCycling || "N/A"}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Leaderboard Section */}
-                    <div className="tips-container">
-                        <h3 className="tips-title">Leaderboard</h3>
-                        <ul className="leaderboard-list">
-                            {data.groupInfo.leaderboard?.map((user, index) => (
-                                <li key={user.userId || index} className="leaderboard-item">
+        <div className="main-layout">
+            {!isMobile && (
+                <div className="sidebar">
+                    <h4>Leaderboard</h4>
+                    {leaderboard.length > 0 ? (
+                        <ol className="leaderboard-list">
+                            {leaderboard.map((user, index) => (
+                                <li key={index} className="leaderboard-item">
                                     <span className="leaderboard-rank">#{index + 1}</span>
                                     <span className="leaderboard-name">{user.name}</span>
-                                    <span className="leaderboard-points">{user.points} pts</span>
+                                    <span className="leaderboard-points">{user.point} pts</span>
                                 </li>
-                            )) || <li>No leaderboard data</li>}
-                        </ul>
-                    </div>
-
-                    {/* Health Tips */}
-                    <div className="tips-container">
-                        <h3 className="tips-title">Health Tips</h3>
-                        <div className="tips-grid">
-                            <div className="tip-card">
-                                <h4>Water Intake</h4>
-                                <p>{data.groupInfo.tips?.waterIntake || "N/A"} L</p>
-                            </div>
-                            <div className="tip-card">
-                                <h4>Calorie Intake</h4>
-                                <p>{data.groupInfo.tips?.calorieIntake || "N/A"}</p>
-                            </div>
-                            <div className="tip-card">
-                                <h4>Sleep Hours</h4>
-                                <p>{data.groupInfo.tips?.sleepHours || "N/A"}</p>
-                            </div>
-                            <div className="tip-card">
-                                <h4>Food Recommendation</h4>
-                                <p>{data.groupInfo.tips?.foodRecommendation || "N/A"}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Motivational Quote */}
-                    <div className="tips-container">
-                        <h3 className="tips-title">Motivational Quote</h3>
-                        <div className="tip-card">
-                            <p>{data.groupInfo.quote || "No quote available"}</p>
-                        </div>
-                    </div>
-                </div>
-            ) : (
-                <div className="loading-container">
-                    <p>Loading profile data...</p>
+                            ))}
+                        </ol>
+                    ) : (
+                        <p>Loading leaderboard...</p>
+                    )}
                 </div>
             )}
+
+            <div className={`topbar ${isMobile ? 'mobile' : ''}`}>
+                <div className="app-name">MyFitnessApp</div>
+                <div className="nav-links">
+                    <button onClick={() => window.location.href = "/about"}>About</button>
+                    <button onClick={() => {
+                        localStorage.removeItem("access_token");
+                        window.location.href = "/login";
+                    }}>Logout</button>
+                </div>
+            </div>
+
+            {!isMobile && (
+                <div className="right-box">
+                    <h4>User Info</h4>
+                    {data && data.profile && data.profile.user ? (
+                        <ul>
+                            <li><strong>Name:</strong> {data.profile.user.fullName}</li>
+                            <li><strong>Age:</strong> {data.profile.user.age || "N/A"}</li>
+                            <li><strong>Height:</strong> {data.profile.user.height} cm</li>
+                            <li><strong>Weight:</strong> {data.profile.user.weight} kg</li>
+                            <li><strong>Gender:</strong> {data.profile.user.gender}</li>
+                        </ul>
+                    ) : (
+                        <p>Loading user info...</p>
+                    )}
+                </div>
+            )}
+
+            <div className={`content ${isMobile ? 'mobile' : ''}`}>
+                {data ? (
+                    <>
+                        <div className="header-section">
+                            <h2>Welcome, {data.profile.user.fullName}</h2>
+                            {isMobile && (
+                                <div className="mobile-user-info">
+                                    <p><strong>Age:</strong> {data.profile.user.age || "N/A"} | <strong>Gender:</strong> {data.profile.user.gender}</p>
+                                    <p><strong>Height:</strong> {data.profile.user.height} cm | <strong>Weight:</strong> {data.profile.user.weight} kg</p>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="meters">
+                            {metrics.map((item, index) => (
+                                <div className="card" key={index}>
+                                    <div className="card-header">
+                                        <div className="card-header-box">
+                                            <div className="card-header-box-name">{item.name}</div>
+                                            <div className="card-header-box-value">{item.value} {item.unit}</div>
+                                        </div>
+                                        <div className="card-header-box">
+                                            <div className="card-header-box-name">Target</div>
+                                            <div className="card-header-box-value">{item.goal} {item.goalUnit}</div>
+                                        </div>
+                                    </div>
+                                    <CircularProgress
+                                        color="neutral"
+                                        determinate
+                                        variant="solid"
+                                        size="lg"
+                                        value={(item.value / item.goal) * 100}
+                                    >
+                                        <span className="textincircle">
+                                            {simplifyFraction(item.value, item.goal).join(' / ')}
+                                        </span>
+                                    </CircularProgress>
+                                    <button onClick={() => window.location.href = `/report/${item.name}`}>
+                                        Show Report <AiOutlineEye />
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="tips-container">
+                            <h3 className="tips-title">Health Tips</h3>
+                            <div className="tips-grid">
+                                {[
+                                    { name: "Water Intake", tip: `You should drink at least ${data.groupInfo.tips?.waterIntake || 2.5} L of water.` },
+                                    { name: "Calorie Intake", tip: `Try to burn at least ${data.groupInfo.tips?.calorieIntake || 500} kcal through exercise.` },
+                                    { name: "Food", tip: `${data.groupInfo.tips?.foodRecommendation || "Maintain a balanced diet rich in proteins and fibers."}` },
+                                    { name: "Sleep", tip: `Aim to sleep ${data.groupInfo.tips?.sleepHours || 7} hours for proper recovery.` },
+                                ].map((item, idx) => (
+                                    <div className="tip-card" key={idx}>
+                                        <h4>{item.name}</h4>
+                                        <p>{item.tip}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </>
+                ) : (
+                    <div className="loading-container">
+                        <CircularProgress size="lg" />
+                        <p>Loading your fitness data...</p>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
 
 export default Profile;
+
 
 
 
