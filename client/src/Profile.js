@@ -1,3 +1,96 @@
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
+
+// function Profile() {
+//     const [data, setData] = useState(null);
+
+//     useEffect(() => {
+//     const token = localStorage.getItem("access_token"); // or the key you're using
+//     if (!token) return console.error("Access token not found in localStorage");
+
+//     axios.get("https://fitbit-app-backend.vercel.app/profile", {
+//         headers: {
+//             Authorization: `Bearer ${token}`
+//         },
+//         withCredentials: true
+//     })
+//     .then(response => setData(response.data))
+//     .catch(error => console.error("Error fetching profile:", error));
+// }, []);
+
+
+//     return (
+//         <div style={{ textAlign: "center", marginTop: "50px" }}>
+//             <h1>Fitbit Profile</h1>
+//             {data ? (
+//                 <div>
+//                     <h2>Name: {data.profile.user.fullName}</h2>
+//                     <p>Age: {data.profile.user.age}</p>
+//                     <p>Height: {data.profile.user.height} cm</p>
+//                     <p>Weight: {data.profile.user.weight} kg</p>
+//                     <p>Gender: {data.profile.user.gender}</p>
+//                     <h2>Steps Today: {data.steps["activities-steps"]?.[0]?.value || "N/A"}</h2>
+//                     <h2>Calories Burned Today: {data.calories.caloriesOut || "N/A"} kcal</h2>
+//                     <h2>Distance Walked: {
+//                         data.calories?.distances?.find(d => d.activity === "total")?.distance ?? "N/A"
+//                     } km</h2>
+//                     <h2>Running distance: {
+//                         data.calories?.distances?.find(d => d.activity === "veryActive")?.distance ?? "N/A"
+//                     } km</h2>
+//                 <h2>Cycling: {
+//                         data.calories?.distances?.find(d => d.activity === "moderatelyActive")?.distance ?? "N/A"
+//                     } km</h2>
+
+//                 <h2>Challenge Today:</h2>
+// <p>Steps: {data.groupInfo.challenge?.steps}</p>
+// <p>Calories Burned: {data.groupInfo.challenge?.caloriesBurned}</p>
+// <p>Calories Running: {data.groupInfo.challenge?.caloriesRunning}</p>
+// <p>Calories Cycling: {data.groupInfo.challenge?.caloriesCycling}</p>
+
+// <h2>Motivational Quote:</h2>
+// <p>{data.groupInfo.quote}</p>
+
+// <h2>Tips:</h2>
+// <p>Water Intake: {data.groupInfo.tips?.waterIntake} L</p>
+// <p>Calorie Intake: {data.groupInfo.tips?.calorieIntake}</p>
+// <p>Sleep Hours: {data.groupInfo.tips?.sleepHours}</p>
+//  <p>Sleep Hours: {data.groupInfo.tips?.foodRecommendation}</p>
+
+// <h2>Group Leaderboard:</h2>
+// <table style={{ margin: "0 auto", borderCollapse: "collapse" }}>
+//     <thead>
+//         <tr>
+//             <th style={{ border: "1px solid #ddd", padding: "8px" }}>Rank</th>
+//             <th style={{ border: "1px solid #ddd", padding: "8px" }}>Name</th>
+//             <th style={{ border: "1px solid #ddd", padding: "8px" }}>Points</th>
+//         </tr>
+//     </thead>
+//     <tbody>
+//         {data.leaderboard.map((user, index) => (
+//             <tr key={user.name}>
+//                 <td style={{ border: "1px solid #ddd", padding: "8px" }}>{index + 1}</td>
+//                 <td style={{ border: "1px solid #ddd", padding: "8px" }}>{user.name}</td>
+//                 <td style={{ border: "1px solid #ddd", padding: "8px" }}>{user.point}</td>
+//             </tr>
+//         ))}
+//     </tbody>
+// </table>
+
+
+//                 </div>
+//             ) : (
+//                 <p>Loading...</p>
+//             )}
+//         </div>
+//     );
+// }
+
+
+// export default Profile;
+
+
+
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -5,88 +98,174 @@ function Profile() {
     const [data, setData] = useState(null);
 
     useEffect(() => {
-    const token = localStorage.getItem("access_token"); // or the key you're using
-    if (!token) return console.error("Access token not found in localStorage");
+        const token = localStorage.getItem("access_token");
+        if (!token) return console.error("Access token not found in localStorage");
 
-    axios.get("https://fitbit-app-backend.vercel.app/profile", {
-        headers: {
-            Authorization: `Bearer ${token}`
-        },
-        withCredentials: true
-    })
-    .then(response => setData(response.data))
-    .catch(error => console.error("Error fetching profile:", error));
-}, []);
-
+        axios.get("https://fitbit-app-backend.vercel.app/profile", {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            withCredentials: true
+        })
+        .then(response => setData(response.data))
+        .catch(error => console.error("Error fetching profile:", error));
+    }, []);
 
     return (
-        <div style={{ textAlign: "center", marginTop: "50px" }}>
-            <h1>Fitbit Profile</h1>
+        <div className="content">
+            <div className="header-section">
+                <h2>Fitbit Profile</h2>
+            </div>
+            
             {data ? (
                 <div>
-                    <h2>Name: {data.profile.user.fullName}</h2>
-                    <p>Age: {data.profile.user.age}</p>
-                    <p>Height: {data.profile.user.height} cm</p>
-                    <p>Weight: {data.profile.user.weight} kg</p>
-                    <p>Gender: {data.profile.user.gender}</p>
-                    <h2>Steps Today: {data.steps["activities-steps"]?.[0]?.value || "N/A"}</h2>
-                    <h2>Calories Burned Today: {data.calories.caloriesOut || "N/A"} kcal</h2>
-                    <h2>Distance Walked: {
-                        data.calories?.distances?.find(d => d.activity === "total")?.distance ?? "N/A"
-                    } km</h2>
-                    <h2>Running distance: {
-                        data.calories?.distances?.find(d => d.activity === "veryActive")?.distance ?? "N/A"
-                    } km</h2>
-                <h2>Cycling: {
-                        data.calories?.distances?.find(d => d.activity === "moderatelyActive")?.distance ?? "N/A"
-                    } km</h2>
+                    <div className="meters">
+                        <div className="card">
+                            <div className="card-header">
+                                <div className="card-header-box">
+                                    <span className="card-header-box-name">Name</span>
+                                    <span className="card-header-box-value">{data.profile.user.fullName}</span>
+                                </div>
+                                <div className="card-header-box">
+                                    <span className="card-header-box-name">Age</span>
+                                    <span className="card-header-box-value">{data.profile.user.age}</span>
+                                </div>
+                            </div>
+                            <div className="card-header">
+                                <div className="card-header-box">
+                                    <span className="card-header-box-name">Height</span>
+                                    <span className="card-header-box-value">{data.profile.user.height} cm</span>
+                                </div>
+                                <div className="card-header-box">
+                                    <span className="card-header-box-name">Weight</span>
+                                    <span className="card-header-box-value">{data.profile.user.weight} kg</span>
+                                </div>
+                            </div>
+                        </div>
 
-                <h2>Challenge Today:</h2>
-<p>Steps: {data.groupInfo.challenge?.steps}</p>
-<p>Calories Burned: {data.groupInfo.challenge?.caloriesBurned}</p>
-<p>Calories Running: {data.groupInfo.challenge?.caloriesRunning}</p>
-<p>Calories Cycling: {data.groupInfo.challenge?.caloriesCycling}</p>
+                        <div className="card">
+                            <div className="card-header">
+                                <div className="card-header-box">
+                                    <span className="card-header-box-name">Steps</span>
+                                    <span className="card-header-box-value">{data.steps["activities-steps"]?.[0]?.value || "N/A"}</span>
+                                </div>
+                            </div>
+                            <div className="card-header">
+                                <div className="card-header-box">
+                                    <span className="card-header-box-name">Calories</span>
+                                    <span className="card-header-box-value">{data.calories.caloriesOut || "N/A"} kcal</span>
+                                </div>
+                            </div>
+                        </div>
 
-<h2>Motivational Quote:</h2>
-<p>{data.groupInfo.quote}</p>
+                        <div className="card">
+                            <div className="card-header">
+                                <div className="card-header-box">
+                                    <span className="card-header-box-name">Distance</span>
+                                    <span className="card-header-box-value">
+                                        {data.calories?.distances?.find(d => d.activity === "total")?.distance ?? "N/A"} km
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="card-header">
+                                <div className="card-header-box">
+                                    <span className="card-header-box-name">Running</span>
+                                    <span className="card-header-box-value">
+                                        {data.calories?.distances?.find(d => d.activity === "veryActive")?.distance ?? "N/A"} km
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
 
-<h2>Tips:</h2>
-<p>Water Intake: {data.groupInfo.tips?.waterIntake} L</p>
-<p>Calorie Intake: {data.groupInfo.tips?.calorieIntake}</p>
-<p>Sleep Hours: {data.groupInfo.tips?.sleepHours}</p>
- <p>Sleep Hours: {data.groupInfo.tips?.foodRecommendation}</p>
+                        <div className="card">
+                            <div className="card-header">
+                                <div className="card-header-box">
+                                    <span className="card-header-box-name">Cycling</span>
+                                    <span className="card-header-box-value">
+                                        {data.calories?.distances?.find(d => d.activity === "moderatelyActive")?.distance ?? "N/A"} km
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-<h2>Group Leaderboard:</h2>
-<table style={{ margin: "0 auto", borderCollapse: "collapse" }}>
-    <thead>
-        <tr>
-            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Rank</th>
-            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Name</th>
-            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Points</th>
-        </tr>
-    </thead>
-    <tbody>
-        {data.leaderboard.map((user, index) => (
-            <tr key={user.name}>
-                <td style={{ border: "1px solid #ddd", padding: "8px" }}>{index + 1}</td>
-                <td style={{ border: "1px solid #ddd", padding: "8px" }}>{user.name}</td>
-                <td style={{ border: "1px solid #ddd", padding: "8px" }}>{user.point}</td>
-            </tr>
-        ))}
-    </tbody>
-</table>
+                    <div className="tips-container">
+                        <h3 className="tips-title">Today's Challenge</h3>
+                        <div className="tips-grid">
+                            <div className="tip-card">
+                                <h4>Steps Goal</h4>
+                                <p>{data.groupInfo.challenge?.steps || "N/A"}</p>
+                            </div>
+                            <div className="tip-card">
+                                <h4>Calories Burned</h4>
+                                <p>{data.groupInfo.challenge?.caloriesBurned || "N/A"}</p>
+                            </div>
+                            <div className="tip-card">
+                                <h4>Running Goal</h4>
+                                <p>{data.groupInfo.challenge?.caloriesRunning || "N/A"}</p>
+                            </div>
+                            <div className="tip-card">
+                                <h4>Cycling Goal</h4>
+                                <p>{data.groupInfo.challenge?.caloriesCycling || "N/A"}</p>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div className="tips-container">
+                        <h3 className="tips-title">Health Tips</h3>
+                        <div className="tips-grid">
+                            <div className="tip-card">
+                                <h4>Water Intake</h4>
+                                <p>{data.groupInfo.tips?.waterIntake || "N/A"} L</p>
+                            </div>
+                            <div className="tip-card">
+                                <h4>Calorie Intake</h4>
+                                <p>{data.groupInfo.tips?.calorieIntake || "N/A"}</p>
+                            </div>
+                            <div className="tip-card">
+                                <h4>Sleep Hours</h4>
+                                <p>{data.groupInfo.tips?.sleepHours || "N/A"}</p>
+                            </div>
+                            <div className="tip-card">
+                                <h4>Food Recommendation</h4>
+                                <p>{data.groupInfo.tips?.foodRecommendation || "N/A"}</p>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div className="tips-container">
+                        <h3 className="tips-title">Motivational Quote</h3>
+                        <div className="tip-card">
+                            <p>{data.groupInfo.quote || "No quote available"}</p>
+                        </div>
+                    </div>
+
+                    <div className="tips-container">
+                        <h3 className="tips-title">Group Leaderboard</h3>
+                        <ul className="leaderboard-list">
+                            {data.leaderboard.map((user, index) => (
+                                <li key={user.name} className="leaderboard-item">
+                                    <span className="leaderboard-rank">{index + 1}</span>
+                                    <span className="leaderboard-name">{user.name}</span>
+                                    <span className="leaderboard-points">{user.point}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
             ) : (
-                <p>Loading...</p>
+                <div className="loading-container">
+                    <p>Loading profile data...</p>
+                </div>
             )}
         </div>
     );
 }
 
-
 export default Profile;
+
+
+
 
 
 
