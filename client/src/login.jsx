@@ -75,7 +75,7 @@
 // export default Login;
 import React from "react";
 import { FaHeartbeat } from "react-icons/fa";
-import "./Login.css"; // Make sure this import exists
+import "./login.css"; // Make sure this import exists
 
 const CLIENT_ID = "23QCJS";
 const REDIRECT_URI = "https://fitbit-app-frontend.vercel.app/callback";
