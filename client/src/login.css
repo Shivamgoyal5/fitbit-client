@@ -6,12 +6,40 @@ html, body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Full-page background with image from public folder */
+/* Background Options - Add any of these classes to .login-background */
+.light-gradient {
+  background: linear-gradient(to bottom right, #e6f7f9, #ffffff);
+}
+
+.calm-blue {
+  background: #f0faff;
+}
+
+.wellness-mint {
+  background: #e4f9f5;
+}
+
+.subtle-offwhite {
+  background: #f9f9f9;
+}
+
+.dark-mode {
+  background: #1e1e2f;
+}
+.dark-mode .login-title,
+.dark-mode .login-description {
+  color: #ffffff;
+}
+.dark-mode .login-button {
+  background-color: #00bfa5;
+}
+.dark-mode .login-button:hover {
+  background-color: #00d1b2;
+}
+
+/* Main container styles */
 .login-background {
   min-height: 100vh;
-/*   background: 
-    linear-gradient(rgba(0, 180, 216, 0.7), rgba(0, 119, 182, 0.7)),
-    url('/back.png') no-repeat center center fixed; */
   background-size: cover;
   display: flex;
   align-items: center;
@@ -19,7 +47,6 @@ html, body {
   padding: 1rem;
 }
 
-/* Container for the card */
 .login-container {
   width: 100%;
   max-width: 1200px;
@@ -27,7 +54,7 @@ html, body {
   justify-content: center;
 }
 
-/* Card styles */
+/* Card styles (unchanged) */
 .login-card {
   background-color: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);
@@ -39,7 +66,7 @@ html, body {
   text-align: center;
 }
 
-/* Rest of your existing styles... */
+/* Rest of your existing styles remain the same */
 .heart-icon {
   display: flex;
   justify-content: center;
